@@ -12,14 +12,33 @@
     <title>Roteiro de viagens</title>
 </head>
 <body>
-    <form action=""></form>
+
+    <form onsubmit="salvarAtividade(event)">
+        <div>
+            <input type="text" placeholder="Qual a atividade?" name="atividade">
+        </div>
+
+        <div>
+            <select name="dia">
+                <option value="2024-07-13">13 de julho</option>
+            </select>
+        </div>
+
+        <div>
+            <select name="hora">
+                <option value="10:00">10:00</option>
+            </select>
+        </div>
+
+        <button>Salva atividade</button>
+    </form>
 
     <main>
         <h1>Atividades</h1>
         <section>
         </section>
     </main>
-    
+
     <script src="script.js"></script>
 </body>
 </html>

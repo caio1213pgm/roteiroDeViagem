@@ -76,3 +76,7 @@ const atualizarListaAtividades = () =>{
 }
 
 atualizarListaAtividades()
+
+const salvarAtividade = (event) =>{
+    event.preventDefault()
+}
