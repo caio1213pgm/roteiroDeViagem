@@ -1,10 +1,25 @@
+const formatador = (data) => {
+    return{
+        dia:{
+            numerico: dayjs(data).format('DD'),
+            semana: {
+                curto: dayjs(data).format('ddd'),
+                longo: dayjs(data).format('dddd'),
+            }
+        },
+        mes: dayjs(data).format('MMMM'),
+        hora: dayjs(data).format('hh:mm')
+    }
+}
+
+
 const atividade = {
     nome: "Academia - ",
     data: new Date("2024-07-12 10:00"),
     finalizada: true
 }
 
-const atividades = [
+let atividades = [
     atividade,
     {
         nome: "Ensaio da peça - ",
@@ -23,8 +38,9 @@ const atividades = [
     }
 ]
 
-const criarItemAtividade = (atividade) => {
+//atividades = []
 
+const criarItemAtividade = (atividade) => {
     let input = '<input type="checkbox" '
 
     if(atividade.finalizada){
@@ -35,17 +51,28 @@ const criarItemAtividade = (atividade) => {
         input += '>'
     }
 
+    const formatar = formatador(atividade.data)
+
     return `
      <div>
         ${input}
         <span>${atividade.nome}</span>
-        <time>${atividade.data}</time>
+        <time>${formatar.dia.semana.longo}, dia ${formatar.dia.numerico} de ${formatar.mes} ás ${formatar.hora}h</time>
     </div>
     `
 }
 
-const section = document.querySelector('section')
+const atualizarListaAtividades = () =>{
+    const section = document.querySelector('section')
 
-for(let atividade of atividades){
+    if(atividades.length == 0){
+        section.innerHTML = `<p>Nenhuma atividade Encontrada</p>`
+        return
+    }
+
+    for(let atividade of atividades){
     section.innerHTML += criarItemAtividade(atividade)
+    }
 }
+
+atualizarListaAtividades()
