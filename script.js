@@ -41,7 +41,7 @@ let atividades = [
 //atividades = []
 
 const criarItemAtividade = (atividade) => {
-    let input = '<input type="checkbox" '
+    let input = '<input onchange="concluirAtividade(event)" value="${atividade.data}" type="checkbox" '
 
     if(atividade.finalizada){
         input += 'checked'
@@ -64,6 +64,7 @@ const criarItemAtividade = (atividade) => {
 
 const atualizarListaAtividades = () =>{
     const section = document.querySelector('section')
+    section.innerHTML = ''
 
     if(atividades.length == 0){
         section.innerHTML = `<p>Nenhuma atividade Encontrada</p>`
@@ -80,7 +81,29 @@ atualizarListaAtividades()
 const salvarAtividade = (event) =>{
     event.preventDefault()
     
-    const dadosFormulario = new FormData
+    const dadosFormulario = new FormData(event.target)
+
+    const nome = dadosFormulario.get('atividade')
+    const dia = dadosFormulario.get('dia')
+    const hora = dadosFormulario.get('hora')
+    const data = `${dia} ${hora}`
+
+    const novaAtividade = {
+        nome,
+        data,
+        finalizada: false
+    }
+
+    const atividadeExiste = atividades.find((atividade) => {
+        return atividade.data == novaAtividade.data
+    })
+
+    if(atividadeExiste){
+        return alert('Dia/hora não disponível')
+    }
+
+    atividades = [novaAtividade, ...atividades]
+    atualizarListaAtividades()
 }
 
 const criarDiasSelecao = () =>{
@@ -112,11 +135,27 @@ const criarHoraSelecao = () => {
     let horarDisponiveis = ''
 
     for(let i = 6; i < 23; i++){
-        horarDisponiveis += `<option valeu="${i}:00">${i}:00</option>`
-        horarDisponiveis += `<option valeu="${i}:30">${i}:30</option>`
+        horarDisponiveis += `<option value="${i}:00">${i}:00</option>`
+        horarDisponiveis += `<option value="${i}:30">${i}:30</option>`
     }
 
     document.querySelector('select[name="hora"]').innerHTML = horarDisponiveis
 }
 
 criarHoraSelecao()
+
+
+const concluirAtividade = (event) => {
+    const input = event.target
+    const dataInput = input.value
+
+    const atividade = atividades.find((atividade) => {
+        return atividade.data == dataInput
+    })
+
+    if(!atividade){
+        return
+    }
+
+    atividade.finalizada = !atividade.finalizada
+}  
