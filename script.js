@@ -79,4 +79,44 @@ atualizarListaAtividades()
 
 const salvarAtividade = (event) =>{
     event.preventDefault()
+    
+    const dadosFormulario = new FormData
 }
+
+const criarDiasSelecao = () =>{
+    const dias = [
+        "2024-07-30",
+        "2024-07-31",
+        "2024-08-01",
+        "2024-08-02",
+        "2024-08-03"
+    ]
+
+    let diasSelecao = ''
+
+    for(let dia of dias){
+        const formatar = formatador(dia)
+        const diaFormatado = `${formatar.dia.numerico} de ${formatar.mes}`
+
+        diasSelecao += `<option value="${dia}">${diaFormatado}</option>`
+    }
+
+
+
+    document.querySelector('select[name="dia"]').innerHTML = diasSelecao
+}
+
+criarDiasSelecao()
+
+const criarHoraSelecao = () => {
+    let horarDisponiveis = ''
+
+    for(let i = 6; i < 23; i++){
+        horarDisponiveis += `<option valeu="${i}:00">${i}:00</option>`
+        horarDisponiveis += `<option valeu="${i}:30">${i}:30</option>`
+    }
+
+    document.querySelector('select[name="hora"]').innerHTML = horarDisponiveis
+}
+
+criarHoraSelecao()
